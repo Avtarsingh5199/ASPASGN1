@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using REGSTR.Models;
 
 namespace REGSTR.Controllers
 {
+    [Authorize (Roles="Administrator")]
     public class CoursesController : Controller
     {
         private readonly StudentRegistrationContext _context;
@@ -19,6 +21,7 @@ namespace REGSTR.Controllers
         }
 
         // GET: Courses
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var studentRegistrationContext = _context.Courses.Include(c => c.Student);

@@ -31,8 +31,15 @@ namespace REGSTR
             services.AddDbContext<StudentRegistrationContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<StudentRegistrationContext>();
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+               .AddDefaultUI()
+                .AddRoles<ApplicationRole>()
+                .AddRoleManager<RoleManager<ApplicationRole>>()
+                .AddEntityFrameworkStores<StudentRegistrationContext>()
+                .AddDefaultTokenProviders();
+
+           // services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<StudentRegistrationContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
